@@ -4,6 +4,7 @@ Proiect excel automation
 import datetime
 import time
 import tkinter as tk
+import random
 from tkinter.filedialog import askopenfilename
 from openpyxl import load_workbook
 from datetime import datetime
@@ -12,17 +13,18 @@ file1 = ''
 file2 = ''
 file3 = 'date_hour.xlsx'
 
-
 wb = load_workbook(file3)
 sheet = wb.active
+
 
 def execution():
     pass
 
+
 # grafica
 
 window = tk.Tk()
-window.geometry("250x450")
+window.geometry("250x550")
 window.title('Excell app')
 
 buton_file_1 = tk.Button(
@@ -60,10 +62,20 @@ buton_date_recorder = tk.Button(
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="blue",
+    bg="#3283a8",
     fg="black",
 )
 buton_date_recorder.pack()
+
+buton_deg_reg = tk.Button(
+    text="Deg reg",
+    width=15,
+    height=3,
+    font=("Arial", 15, "bold"),
+    bg="green",
+    fg="black",
+)
+buton_deg_reg.pack()
 
 buton_reset_data = tk.Button(
     text="Reset Data",
@@ -103,23 +115,41 @@ def reset_data(event):
         # de aceea trebuie sa stergem de 4 ori
     print('Delete ' + file3 + '...')
     # write
-    numero=sheet.cell(row=1, column=1)
+    numero = sheet.cell(row=1, column=1)
     hour = sheet.cell(row=1, column=2)
     date = sheet.cell(row=1, column=3)
     time = sheet.cell(row=1, column=4)
 
-    no='No.'
+    no = 'No.'
     h1 = 'Hour'
     d1 = 'Date'
     t1 = 'Epoch'
     # t2=0 #folosit pentru range
-    numero.value=no
+    numero.value = no
     hour.value = h1
     date.value = d1
     time.value = t1
     print('Write ' + file3 + '...')
     wb.save(file3)
     print('Save ' + file3 + '...')
+
+    global file1
+    print('Read and load ' + file1 + '...')
+    wb = load_workbook(file1)
+    sheet = wb.active
+
+    for i in range(2):
+        sheet.delete_cols(1)
+        print('Delete ' + file1 + '...')
+        numero = sheet.cell(row=1, column=1)
+        degree = sheet.cell(row=1, column=2)
+        no = 'No.'
+        d1 = 'Temperature(°C)'
+        numero.value = no
+        degree.value=d1
+    print('Write ' + file1 + '...')
+    wb.save(file1)
+    print('Save ' + file1 + '...')
 
 
 def date_recorder(event):
@@ -129,13 +159,12 @@ def date_recorder(event):
     wb = load_workbook(file3)
     sheet = wb['Sheet']
 
-    date_now = datetime.now()                   # data si ora actuala
-    hour_now = date_now.strftime('%H:%M:%S')    # ora actuala
-    day_now = date_now.strftime('%d''-''%m''-''%y')    # ziua actuala
-    epoch = time.time()                         # timpul secunde
+    date_now = datetime.now()  # data si ora actuala
+    hour_now = date_now.strftime('%H:%M:%S')  # ora actuala
+    day_now = date_now.strftime('%d''-''%m''-''%y')  # ziua actuala
+    epoch = time.time()  # timpul secunde
 
-
-    numero_cell=['A' + str(i) for i in range(1, 22)]
+    numero_cell = ['A' + str(i) for i in range(1, 22)]
     hour_cell = ['B' + str(i) for i in range(1, 22)]
     date_cell = ['C' + str(i) for i in range(1, 22)]
     epoch_cell = ['D' + str(i) for i in range(1, 22)]
@@ -147,7 +176,7 @@ def date_recorder(event):
     for i in epoch_cell[1:21]:
         if sheet[i].value is not None:
             t1 = float(sheet[i].value)
-            delta = float(epoch)-t1
+            delta = float(epoch) - t1
             x += 1
             if x == 21:
                 print('toate celulele au fost completate! folositi reset pentru rescriere')
@@ -157,7 +186,7 @@ def date_recorder(event):
             sheet[i].value = epoch
             sheet[date_cell[x]].value = day_now
             sheet[hour_cell[x]].value = hour_now
-            sheet[numero_cell[x]].value=str(x)+'.'
+            sheet[numero_cell[x]].value = str(x) + '.'
             print('values has been recorded...')
             break
         else:
@@ -166,11 +195,30 @@ def date_recorder(event):
     wb.save(file3)
 
 
+def deg_reg(event):
+    global file1
+    wb = load_workbook(file1)
+    sheet = wb['Sheet']
+    degree = random.randint(18, 22)
+    print('Temperatura inregistrata este', degree, '°C')
+    numero_cell = ['A' + str(i) for i in range(1, 22)]
+    degree_cell = ['B' + str(i) for i in range(1, 22)]
+    x = 0
+    for i in numero_cell[1:21]:
+        x += 1
+        if sheet[i].value is None:
+            sheet[i].value = str(x) + '.'
+            sheet[degree_cell[x]].value = str(degree) + '°'
+            break
+    wb.save(file1)
+
+
 buton_file_1.bind("<Button-1>", file_1)
 buton_file_2.bind("<Button-1>", file_2)
 buton_execution.bind("<Button-1>", execution)
 buton_reset_data.bind("<Button-1>", reset_data)
 buton_date_recorder.bind("<Button-1>", date_recorder)
+buton_deg_reg.bind("<Button-1>", deg_reg)
 
 window.mainloop()
 
@@ -178,10 +226,10 @@ window.mainloop()
 # todo de redenumit var sau alti termeni in engleza
 # todo de pus descriere pentru fiecare functie cu ''' '''
 # todo wait time de intrudus manual (buton sau alta varianta)
-# todo de verificat implemantare elif in loc de if la data
 # todo de adaptat codul la oop
 # todo de verificat daca aplicatia poate fi setata in fereastra principala
 # todo de facut functie pentru parcurgerea second cell si calcul delta
 # todo de parcurs codul in vederea aflarii posibilelor intrebari
-#todo de scris epoch excel cu alta culoare
-#todo de implementat  apelarea a 2 functii pe un buton
+# todo de scris epoch excel cu alta culoare(gri)
+# todo de implementat  apelarea a 2 functii pe un buton
+# todo de clarificat none vs not none
