@@ -9,20 +9,66 @@ from tkinter.filedialog import askopenfilename
 from openpyxl import load_workbook
 from datetime import datetime
 
-file1 = ''
-file2 = ''
 file3 = 'date_hour.xlsx'
 
 wb = load_workbook(file3)
 sheet = wb.active
 
 
-def execution():
-    pass
+def execution(event):
+    # load and read from file 1
+    wb = load_workbook(file1)
+    sheet = wb.active
+    no_list = []
+    t_list = []
+    for i in range(1, 22):
+        n = sheet['A' + str(i)].value
+        no_list.append(n)
+        t = sheet['B' + str(i)].value
+        t_list.append(t)
+    # load and read from file 3
+    wb = load_workbook(file3)
+    sheet = wb.active
+    h = sheet['B1'].value
+    d = sheet['C1'].value
+    h_list = []
+    d_list = []
+    for i in range(1, 22):
+        h = sheet['B' + str(i)].value
+        h_list.append(h)
+        d = sheet['C' + str(i)].value
+        d_list.append(d)
+
+    # write
+    def range_letter(start, stop):
+        return (chr(n) for n in range(ord(start), ord(stop) + 1))
+
+    line_2 = [str(i) + '2' for i in range_letter("A", "Z")]
+    line_3 = [str(i) + '3' for i in range_letter("A", "Z")]
+    line_4 = [str(i) + '4' for i in range_letter("A", "Z")]
+    line_5 = [str(i) + '5' for i in range_letter("A", "Z")]
+
+    wb = load_workbook(file2)
+    sheet = wb.active
+
+    for i in range(21):
+        #a,b,c,d= index de inceput pentru fiecare lista in parte
+        a = no_list[i]
+        b = t_list[i]
+        c = h_list[i]
+        d = d_list[i]
+
+        sheet[line_2[i]].value = a
+        sheet[line_3[i]].value = b
+        sheet[line_4[i]].value = c
+        sheet[line_5[i]].value = d
+
+
+    print('Report created')
+    wb.save(file2)
 
 
 # grafica
-
 window = tk.Tk()
 window.geometry("250x550")
 window.title('Excell app')
@@ -38,7 +84,7 @@ buton_file_1 = tk.Button(
 buton_file_1.pack()
 
 buton_file_2 = tk.Button(
-    text="File",
+    text="Report file",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
@@ -48,7 +94,7 @@ buton_file_2 = tk.Button(
 buton_file_2.pack()
 
 buton_execution = tk.Button(
-    text="Execution",
+    text="Execute",
     width=15,
     height=2,
     font=("Arial", 15, "bold"),
@@ -146,7 +192,7 @@ def reset_data(event):
         no = 'No.'
         d1 = 'Temperature(°C)'
         numero.value = no
-        degree.value=d1
+        degree.value = d1
     print('Write ' + file1 + '...')
     wb.save(file1)
     print('Save ' + file1 + '...')
@@ -233,3 +279,4 @@ window.mainloop()
 # todo de scris epoch excel cu alta culoare(gri)
 # todo de implementat  apelarea a 2 functii pe un buton
 # todo de clarificat none vs not none
+# todo de aprofundat:https://www.codingem.com/python-range-of-letters/
