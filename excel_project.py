@@ -163,7 +163,7 @@ def reset_data(event):
     h1 = 'Hour'
     d1 = 'Date'
     t1 = 'Epoch'
-    # t2=0 #folosit pentru range
+
     numero.value = no
     hour.value = h1
     date.value = d1
@@ -227,11 +227,12 @@ def date_recorder(event):
             sheet[hour_cell[x]].value = hour_now
             sheet[numero_cell[x]].value = str(x) + '.'
             print('values has been recorded...')
+            deg_reg()
             break
         else:
             print(f'Asteptati {wait_sec - int(delta)} secunde pana la inregistrarea urmatoare ')
             break
-    deg_reg()
+
     wb.save(file3)
 
 
@@ -276,4 +277,4 @@ window.mainloop()
 # todo de clarificat none vs not none
 # todo de aprofundat:https://www.codingem.com/python-range-of-letters/
 #todo de pus poze la butoane
-#todo de introdus delta time la tabelul cu tempetarura
+
