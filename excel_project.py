@@ -1,44 +1,48 @@
-'''
-Proiect excel automation
-'''
+"""
+Excel automation project
+"""
+
 import datetime
 import time
 import tkinter as tk
 import random
 from tkinter.filedialog import askopenfilename
-from openpyxl import load_workbook
 from datetime import datetime
+import openpyxl
 
 
-file3 = 'date_hour.xlsx'
+FILE3 = 'date_hour.xlsx'
 
-wb = load_workbook(file3)
-sheet = wb.active
+WB = openpyxl.load_workbook(FILE3)
+SHEET = WB.active
 
 
 def execution(event):
+    """
+
+    :param event:
+    :return: create report
+    """
     # load and read from file 1
-    wb = load_workbook(file1)
-    sheet = wb.active
+    WB = openpyxl.load_workbook(FILE1)
+    SHEET = WB.active
     no_list = []
     t_list = []
     for i in range(1, 22):
-        n = sheet['A' + str(i)].value
-        no_list.append(n)
-        t = sheet['B' + str(i)].value
-        t_list.append(t)
-    # load and read from file 3
-    wb = load_workbook(file3)
-    sheet = wb.active
-    h = sheet['B1'].value
-    d = sheet['C1'].value
+        no_cell = SHEET['A' + str(i)].value
+        no_list.append(no_cell)
+        temp_cell = SHEET['B' + str(i)].value
+        t_list.append(temp_cell)
+    # load and read from FILE3
+    WB = openpyxl.load_workbook(FILE3)
+    SHEET = WB.active
     h_list = []
     d_list = []
     for i in range(1, 22):
-        h = sheet['B' + str(i)].value
-        h_list.append(h)
-        d = sheet['C' + str(i)].value
-        d_list.append(d)
+        hour_cell = SHEET['B' + str(i)].value
+        h_list.append(hour_cell)
+        date_cell = SHEET['C' + str(i)].value
+        d_list.append(date_cell)
 
     # write
     def range_letter(start, stop):
@@ -49,33 +53,31 @@ def execution(event):
     line_4 = [str(i) + '4' for i in range_letter("A", "Z")]
     line_5 = [str(i) + '5' for i in range_letter("A", "Z")]
 
-    wb = load_workbook(file2)
-    sheet = wb.active
+    WB = openpyxl.load_workbook(FILE2)
+    SHEET = WB.active
 
     for i in range(21):
-        #a,b,c,d= index de inceput pentru fiecare lista in parte
-        a = no_list[i]
-        b = t_list[i]
-        c = h_list[i]
-        d = d_list[i]
+        # start_no_list= index de inceput pentru fiecare lista in parte
+        start_no_list = no_list[i]
+        start_t_list = t_list[i]
+        start_h_list = h_list[i]
+        start_d_list = d_list[i]
 
-        sheet[line_2[i]].value = a
-        sheet[line_3[i]].value = b
-        sheet[line_4[i]].value = c
-        sheet[line_5[i]].value = d
-
+        SHEET[line_2[i]].value = start_no_list
+        SHEET[line_3[i]].value = start_t_list
+        SHEET[line_4[i]].value = start_h_list
+        SHEET[line_5[i]].value = start_d_list
 
     print('Report created')
-    wb.save(file2)
+    WB.save(FILE2)
 
 
 # grafica
-window = tk.Tk()
-window.geometry("250x550")
-window.title('Excell app')
+WINDOW = tk.Tk()
+WINDOW.geometry("250x550")
+WINDOW.title('Excell app')
 
-
-buton_file_1 = tk.Button(
+BUTON_FILE_1 = tk.Button(
     text="Browse",
     width=15,
     height=3,
@@ -83,9 +85,9 @@ buton_file_1 = tk.Button(
     bg='green',
     fg="black",
 )
-buton_file_1.pack()
+BUTON_FILE_1.pack()
 
-buton_file_2 = tk.Button(
+BUTON_FILE_2 = tk.Button(
     text="Report file",
     width=15,
     height=3,
@@ -93,9 +95,9 @@ buton_file_2 = tk.Button(
     bg="green",
     fg="black",
 )
-buton_file_2.pack()
+BUTON_FILE_2.pack()
 
-buton_execution = tk.Button(
+BUTON_EXECUTION = tk.Button(
     text="Execute",
     width=15,
     height=2,
@@ -103,9 +105,9 @@ buton_execution = tk.Button(
     bg="green",
     fg="black",
 )
-buton_execution.pack()
+BUTON_EXECUTION.pack()
 
-buton_date_recorder = tk.Button(
+BUTON_DATE_RECORDER = tk.Button(
     text="Date Recorder",
     width=15,
     height=3,
@@ -113,10 +115,9 @@ buton_date_recorder = tk.Button(
     bg="#3283a8",
     fg="black",
 )
-buton_date_recorder.pack()
+BUTON_DATE_RECORDER.pack()
 
-
-buton_reset_data = tk.Button(
+BUTON_RESET_DATA = tk.Button(
     text="Reset Data",
     width=15,
     height=3,
@@ -124,79 +125,97 @@ buton_reset_data = tk.Button(
     bg="yellow",
     fg="black",
 )
-buton_reset_data.pack()
+BUTON_RESET_DATA.pack()
 
 
 def file_1(event):
-    global file1
-    file1 = askopenfilename(
+    """
+    :param event:
+    :return:FILE1 name
+    """
+    global FILE1
+    FILE1 = askopenfilename(
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
 
 
 def file_2(event):
-    global file2
-    file2 = askopenfilename(
+    """
+        :param event:
+        :return:FILE2 name
+        """
+    global FILE2
+    FILE2 = askopenfilename(
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
 
 
 def reset_data(event):
+    """
+
+    :param event:
+    :return: clear table from all files
+    """
     # read and load file
-    global file3
-    print('Read and load ' + file3 + '...')
-    wb = load_workbook(file3)
-    sheet = wb.active
+    global FILE3
+    print('Read and load ' + FILE3 + '...')
+    WB = openpyxl.load_workbook(FILE3)
+    SHEET = WB.active
     # delete columns
-    for i in range(4):  # in loc sa punem de 4 ori sheet.delete_cols(1)
+    for i in range(4):  # in loc sa punem de 4 ori SHEET.delete_cols(1)
         # facem un for cu range de 4 , stergem coloana 1 de 4 ori
-        sheet.delete_cols(1)  # de fiecare data cand stergem coloana 1 este inlocuita cu urmatoarea,
+        SHEET.delete_cols(1)  # de fiecare data cand stergem coloana 1 este inlocuita cu urmatoarea,
         # de aceea trebuie sa stergem de 4 ori
-    print('Delete ' + file3 + '...')
+    print('Delete ' + FILE3 + '...')
     # write
-    numero = sheet.cell(row=1, column=1)
-    hour = sheet.cell(row=1, column=2)
-    date = sheet.cell(row=1, column=3)
-    time = sheet.cell(row=1, column=4)
+    numero = SHEET.cell(row=1, column=1)
+    hour = SHEET.cell(row=1, column=2)
+    date = SHEET.cell(row=1, column=3)
+    time = SHEET.cell(row=1, column=4)
 
-    no = 'No.'
-    h1 = 'Hour'
-    d1 = 'Date'
-    t1 = 'Epoch'
+    number_title = 'No.'
+    hour_title = 'Hour'
+    date_title = 'Date'
+    epoch_title = 'Epoch'
 
-    numero.value = no
-    hour.value = h1
-    date.value = d1
-    time.value = t1
-    print('Write ' + file3 + '...')
-    wb.save(file3)
-    print('Save ' + file3 + '...')
+    numero.value = number_title
+    hour.value = hour_title
+    date.value = date_title
+    time.value = epoch_title
+    print('Write ' + FILE3 + '...')
+    WB.save(FILE3)
+    print('Save ' + FILE3 + '...')
 
-    global file1
-    print('Read and load ' + file1 + '...')
-    wb = load_workbook(file1)
-    sheet = wb.active
+    global FILE1
+    print('Read and load ' + FILE1 + '...')
+    WB = openpyxl.load_workbook(FILE1)
+    SHEET = WB.active
 
     for i in range(2):
-        sheet.delete_cols(1)
-        print('Delete ' + file1 + '...')
-        numero = sheet.cell(row=1, column=1)
-        degree = sheet.cell(row=1, column=2)
-        no = 'No.'
+        SHEET.delete_cols(1)
+        print('Delete ' + FILE1 + '...')
+        numero = SHEET.cell(row=1, column=1)
+        degree = SHEET.cell(row=1, column=2)
+        number = 'No.'
         d1 = 'Temperature(°C)'
-        numero.value = no
+        numero.value = number
         degree.value = d1
-    print('Write ' + file1 + '...')
-    wb.save(file1)
-    print('Save ' + file1 + '...')
+    print('Write ' + FILE1 + '...')
+    WB.save(FILE1)
+    print('Save ' + FILE1 + '...')
 
 
 def date_recorder(event):
+    """
+
+    :param event:
+    :return: record data
+    """
     global file3
 
     # load and write:
-    wb = load_workbook(file3)
-    sheet = wb['Sheet']
+    WB = openpyxl.load_workbook(FILE3)
+    SHEET = WB['Sheet']
 
     date_now = datetime.now()  # data si ora actuala
     hour_now = date_now.strftime('%H:%M:%S')  # ora actuala
@@ -208,24 +227,24 @@ def date_recorder(event):
     date_cell = ['C' + str(i) for i in range(1, 22)]
     epoch_cell = ['D' + str(i) for i in range(1, 22)]
 
-    x = 1
+    count = 1
     delta = 6
     wait_sec = 5
 
     for i in epoch_cell[1:21]:
-        if sheet[i].value is not None:
-            t1 = float(sheet[i].value)
-            delta = float(epoch) - t1
-            x += 1
-            if x == 21:
+        if SHEET[i].value is not None:
+            time_float = float(SHEET[i].value)
+            delta = float(epoch) - time_float
+            count += 1
+            if count == 21:
                 print('toate celulele au fost completate! folositi reset pentru rescriere')
             continue
 
         elif delta > wait_sec:
-            sheet[i].value = epoch
-            sheet[date_cell[x]].value = day_now
-            sheet[hour_cell[x]].value = hour_now
-            sheet[numero_cell[x]].value = str(x) + '.'
+            SHEET[i].value = epoch
+            SHEET[date_cell[count]].value = day_now
+            SHEET[hour_cell[count]].value = hour_now
+            SHEET[numero_cell[count]].value = str(count) + '.'
             print('values has been recorded...')
             deg_reg()
             break
@@ -233,48 +252,32 @@ def date_recorder(event):
             print(f'Asteptati {wait_sec - int(delta)} secunde pana la inregistrarea urmatoare ')
             break
 
-    wb.save(file3)
-
+    WB.save(FILE3)
 
 
 def deg_reg():
-    global file1
-    wb = load_workbook(file1)
-    sheet = wb['Sheet']
+    """
+    :return: temperature data
+    """
+    global FILE1
+    WB = openpyxl.load_workbook(FILE1)
+    SHEET = WB['Sheet']
     degree = random.randint(18, 22)
     print('Temperatura inregistrata este', degree, '°C')
     numero_cell = ['A' + str(i) for i in range(1, 22)]
     degree_cell = ['B' + str(i) for i in range(1, 22)]
-    x = 0
+    count = 0
     for i in numero_cell[1:21]:
-        x += 1
-        if sheet[i].value is None:
-            sheet[i].value = str(x) + '.'
-            sheet[degree_cell[x]].value = str(degree) + '°'
+        count += 1
+        if SHEET[i].value is None:
+            SHEET[i].value = str(count) + '.'
+            SHEET[degree_cell[count]].value = str(degree) + '°'
             break
-    wb.save(file1)
+    WB.save(FILE1)
 
-
-buton_file_1.bind("<Button-1>", file_1)
-buton_file_2.bind("<Button-1>", file_2)
-buton_execution.bind("<Button-1>", execution)
-buton_reset_data.bind("<Button-1>", reset_data)
-buton_date_recorder.bind("<Button-1>", date_recorder)
-
-
-window.mainloop()
-
-# todo de verificat cu pylint
-# todo de redenumit var sau alti termeni in engleza
-# todo de pus descriere pentru fiecare functie cu ''' '''
-# todo wait time de intrudus manual (buton sau alta varianta)
-# todo de adaptat codul la oop
-# todo de verificat daca aplicatia poate fi setata in fereastra principala
-# todo de facut functie pentru parcurgerea second cell si calcul delta
-# todo de parcurs codul in vederea aflarii posibilelor intrebari
-# todo de scris epoch excel cu alta culoare(gri)
-# todo de implementat  apelarea a 2 functii pe un buton
-# todo de clarificat none vs not none
-# todo de aprofundat:https://www.codingem.com/python-range-of-letters/
-#todo de pus poze la butoane
-
+BUTON_FILE_1.bind("<Button-1>", file_1)
+BUTON_FILE_2.bind("<Button-1>", file_2)
+BUTON_EXECUTION.bind("<Button-1>", execution)
+BUTON_RESET_DATA.bind("<Button-1>", reset_data)
+BUTON_DATE_RECORDER.bind("<Button-1>", date_recorder)
+WINDOW.mainloop()
