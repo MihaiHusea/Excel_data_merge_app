@@ -9,6 +9,7 @@ from tkinter.filedialog import askopenfilename
 from openpyxl import load_workbook
 from datetime import datetime
 
+
 file3 = 'date_hour.xlsx'
 
 wb = load_workbook(file3)
@@ -73,12 +74,13 @@ window = tk.Tk()
 window.geometry("250x550")
 window.title('Excell app')
 
+
 buton_file_1 = tk.Button(
     text="Browse",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="green",
+    bg='green',
     fg="black",
 )
 buton_file_1.pack()
@@ -113,15 +115,6 @@ buton_date_recorder = tk.Button(
 )
 buton_date_recorder.pack()
 
-buton_deg_reg = tk.Button(
-    text="Deg reg",
-    width=15,
-    height=3,
-    font=("Arial", 15, "bold"),
-    bg="green",
-    fg="black",
-)
-buton_deg_reg.pack()
 
 buton_reset_data = tk.Button(
     text="Reset Data",
@@ -238,10 +231,12 @@ def date_recorder(event):
         else:
             print(f'Asteptati {wait_sec - int(delta)} secunde pana la inregistrarea urmatoare ')
             break
+    deg_reg()
     wb.save(file3)
 
 
-def deg_reg(event):
+
+def deg_reg():
     global file1
     wb = load_workbook(file1)
     sheet = wb['Sheet']
@@ -264,7 +259,7 @@ buton_file_2.bind("<Button-1>", file_2)
 buton_execution.bind("<Button-1>", execution)
 buton_reset_data.bind("<Button-1>", reset_data)
 buton_date_recorder.bind("<Button-1>", date_recorder)
-buton_deg_reg.bind("<Button-1>", deg_reg)
+
 
 window.mainloop()
 
@@ -280,3 +275,5 @@ window.mainloop()
 # todo de implementat  apelarea a 2 functii pe un buton
 # todo de clarificat none vs not none
 # todo de aprofundat:https://www.codingem.com/python-range-of-letters/
+#todo de pus poze la butoane
+#todo de introdus delta time la tabelul cu tempetarura
