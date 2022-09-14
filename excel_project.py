@@ -275,6 +275,7 @@ def deg_reg():
             break
     WB.save(FILE1)
 
+
 BUTON_FILE_1.bind("<Button-1>", file_1)
 BUTON_FILE_2.bind("<Button-1>", file_2)
 BUTON_EXECUTION.bind("<Button-1>", execution)
