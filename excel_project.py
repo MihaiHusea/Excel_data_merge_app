@@ -8,9 +8,12 @@ import tkinter as tk
 import random
 from tkinter.filedialog import askopenfilename
 from datetime import datetime
+from tkinter.messagebox import showinfo
+
 import openpyxl
 
-
+FILE1=''
+FILE2=''
 FILE3 = 'date_hour.xlsx'
 
 WB = openpyxl.load_workbook(FILE3)
@@ -137,6 +140,9 @@ def file_1(event):
     FILE1 = askopenfilename(
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
+    test=FILE1
+    print(test)
+
 
 
 def file_2(event):
