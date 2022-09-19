@@ -1,6 +1,6 @@
 import openpyxl
 import unittest
-from excel_project import FILE1, FILE2
+from excel_project import FILE1, FILE2,range_letter
 
 
 class deg_reg_test(unittest.TestCase):
@@ -62,3 +62,39 @@ class deg_reg_test(unittest.TestCase):
         actual_name_file_2 = file2_path_split[len(file2_path_split) - 1]
         expected = 'final_report.xlsx'
         self.assertEqual(expected, actual_name_file_2)
+
+    def test_range_letter_expect_pass(self):
+        """
+        :test: range letter
+        """
+        start='A'
+        stop='B'
+        lista = []
+
+        for i in range_letter(start, stop):
+            lista.append(i)
+        x = 0
+        for j in range_letter(start, stop):
+            assert j == lista[x]
+            x+=1
+
+    def test_range_letter_expect_fail(self):
+        """
+        :test: range letter
+        """
+        start='A'
+        stop='B'
+        lista = []
+
+        for i in range_letter(start, stop):
+            lista.append(i)
+        x = 1
+        for j in range_letter(start, stop):
+            assert j == lista[x]
+            x+=1
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
