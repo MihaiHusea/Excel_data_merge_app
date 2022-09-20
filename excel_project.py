@@ -7,12 +7,9 @@ import time
 import tkinter as tk
 import random
 from tkinter.filedialog import askopenfilename
+from tkinter import *
 from datetime import datetime
-
-
 import openpyxl
-
-
 
 FILE1=''
 FILE2=''
@@ -22,61 +19,78 @@ WB = openpyxl.load_workbook(FILE3)
 SHEET = WB.active
 
 
-
-# grafica
+#GUI
 WINDOW = tk.Tk()
-WINDOW.geometry("250x550")
-WINDOW.title('Excell app')
+WINDOW.title('AppX v1.0')
+WINDOW.geometry("1000x550")
+WINDOW.configure(background="#1D6F42")
+background_text=Label(WINDOW,text='KEEP\nCALM\nIT'+"'"+'S JUST AN\nEXCEL\nFILE',
+           bg='#1D6F42',
+           font=("Arial", 35, "bold"),
+           fg="white")
+background_text.pack()
+background_text.place(x=20, y=85)
+
+
+# click_btn= PhotoImage(file='browse.png')
 
 BUTON_FILE_1 = tk.Button(
-    text="Browse",
+    # image=click_btn,
+    text="Load",
+    # width=180,
     width=15,
+    # height=100,
     height=3,
     font=("Arial", 15, "bold"),
-    bg='green',
+    bg='#abf77e',
     fg="black",
 )
 BUTON_FILE_1.pack()
+BUTON_FILE_1.place(x=450,y=20)
 
 BUTON_FILE_2 = tk.Button(
-    text="Report file",
+    text="Report",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="green",
+    bg="#abf77e",
     fg="black",
 )
 BUTON_FILE_2.pack()
+BUTON_FILE_2.place(x=550,y=120)
 
 BUTON_EXECUTION = tk.Button(
     text="Execute",
     width=15,
-    height=2,
+    height=3,
     font=("Arial", 15, "bold"),
-    bg="green",
+    bg="#abf77e",
     fg="black",
 )
 BUTON_EXECUTION.pack()
+BUTON_EXECUTION.place(x=450,y=220)
 
 BUTON_DATE_RECORDER = tk.Button(
-    text="Date Recorder",
+    text="Rec",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="#3283a8",
+    bg="#3EB489",
     fg="black",
 )
 BUTON_DATE_RECORDER.pack()
+BUTON_DATE_RECORDER.place(x=550,y=320)
 
 BUTON_RESET_DATA = tk.Button(
-    text="Reset Data",
+    text="Delete",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="yellow",
+    bg="#a80505",
     fg="black",
 )
 BUTON_RESET_DATA.pack()
+BUTON_RESET_DATA.place(x=450,y=420)
 
 
 def file_1(event):
@@ -88,8 +102,7 @@ def file_1(event):
     FILE1 = askopenfilename(
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
-    test=FILE1
-    print(test)
+    print(FILE1,' loaded!')
 
 
 
@@ -102,11 +115,10 @@ def file_2(event):
     FILE2 = askopenfilename(
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
-
+    print(FILE2,' loaded!')
 
 def execute(event):
     """
-
     :param event:
     :return: create report
     """
@@ -130,9 +142,7 @@ def execute(event):
         h_list.append(hour_cell)
         date_cell = SHEET['C' + str(i)].value
         d_list.append(date_cell)
-
-    # write
-
+    # write report
     line_2 = [str(i) + '2' for i in range_letter("A", "Z")]
     line_3 = [str(i) + '3' for i in range_letter("A", "Z")]
     line_4 = [str(i) + '4' for i in range_letter("A", "Z")]
@@ -142,7 +152,7 @@ def execute(event):
     SHEET = WB.active
 
     for i in range(21):
-        # start_no_list= index de inceput pentru fiecare lista in parte
+        # start_no_list= start index for each list
         start_no_list = no_list[i]
         start_t_list = t_list[i]
         start_h_list = h_list[i]
@@ -153,7 +163,7 @@ def execute(event):
         SHEET[line_4[i]].value = start_h_list
         SHEET[line_5[i]].value = start_d_list
 
-    print('Report created')
+    print('Report has been created! Report path: ', FILE2)
     WB.save(FILE2)
 
 def range_letter(start, stop):
@@ -164,24 +174,21 @@ def range_letter(start, stop):
     """
     return (chr(n) for n in range(ord(start), ord(stop) + 1))
 
-
-
 def date_recorder(event):
     """
-
     :param event:
     :return: record data
     """
     global file3
 
-    # load and write:
+    # write date and hour:
     WB = openpyxl.load_workbook(FILE3)
     SHEET = WB['Sheet']
 
-    date_now = datetime.now()  # data si ora actuala
-    hour_now = date_now.strftime('%H:%M:%S')  # ora actuala
-    day_now = date_now.strftime('%d''-''%m''-''%y')  # ziua actuala
-    epoch = time.time()  # timpul secunde
+    date_now = datetime.now()  # current date and hour
+    hour_now = date_now.strftime('%H:%M:%S')  # hour format
+    day_now = date_now.strftime('%d''-''%m''-''%y')  # day format
+    epoch = time.time()  # epoch time in seconds (from 01.01.1970)
 
     numero_cell = ['A' + str(i) for i in range(1, 22)]
     hour_cell = ['B' + str(i) for i in range(1, 22)]
@@ -198,7 +205,7 @@ def date_recorder(event):
             delta = float(epoch) - time_float
             count += 1
             if count == 21:
-                print('toate celulele au fost completate! folositi reset pentru rescriere')
+                print('Full memory! Press delete for reset data!')
             continue
 
         elif delta > wait_sec:
@@ -206,32 +213,26 @@ def date_recorder(event):
             SHEET[date_cell[count]].value = day_now
             SHEET[hour_cell[count]].value = hour_now
             SHEET[numero_cell[count]].value = str(count) + '.'
-            print('values has been recorded...')
-            deg_reg()
+            print('Values has been recorded!')
+            deg_reg() #write temperature data
             break
         else:
-            print(f'Asteptati {wait_sec - int(delta)} secunde pana la inregistrarea urmatoare ')
+            print(f'Please wait {wait_sec - int(delta)} seconds until the next record! ')
             break
-
     WB.save(FILE3)
 
 def reset_data(event):
     """
-
     :param event:
     :return: clear table from all files
     """
-    # read and load file
+    # read and load FILE3
     global FILE3
-    print('Read and load ' + FILE3 + '...')
     WB = openpyxl.load_workbook(FILE3)
     SHEET = WB.active
     # delete columns
-    for i in range(4):  # in loc sa punem de 4 ori SHEET.delete_cols(1)
-        # facem un for cu range de 4 , stergem coloana 1 de 4 ori
-        SHEET.delete_cols(1)  # de fiecare data cand stergem coloana 1 este inlocuita cu urmatoarea,
-        # de aceea trebuie sa stergem de 4 ori
-    print('Delete ' + FILE3 + '...')
+    for i in range(4):  #using for loop with range(4) to delete column one four times
+        SHEET.delete_cols(1)  # when deleted column 1 it's been replaced with column 2 and so on
     # write
     numero = SHEET.cell(row=1, column=1)
     hour = SHEET.cell(row=1, column=2)
@@ -247,27 +248,22 @@ def reset_data(event):
     hour.value = hour_title
     date.value = date_title
     time.value = epoch_title
-    print('Write ' + FILE3 + '...')
     WB.save(FILE3)
-    print('Save ' + FILE3 + '...')
 
     global FILE1
-    print('Read and load ' + FILE1 + '...')
     WB = openpyxl.load_workbook(FILE1)
     SHEET = WB.active
 
     for i in range(2):
         SHEET.delete_cols(1)
-        print('Delete ' + FILE1 + '...')
         numero = SHEET.cell(row=1, column=1)
         degree = SHEET.cell(row=1, column=2)
         number = 'No.'
         d1 = 'Temperature(°C)'
         numero.value = number
         degree.value = d1
-    print('Write ' + FILE1 + '...')
     WB.save(FILE1)
-    print('Save ' + FILE1 + '...')
+    print('Data has been deleted!')
 
 
 
@@ -280,7 +276,6 @@ def deg_reg():
     WB = openpyxl.load_workbook(FILE1)
     SHEET = WB['Sheet']
     degree = random.randint(18, 22)
-    print('Temperatura inregistrata este', degree, '°C')
     numero_cell = ['A' + str(i) for i in range(1, 22)]
     degree_cell = ['B' + str(i) for i in range(1, 22)]
     count = 0
