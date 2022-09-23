@@ -1,7 +1,6 @@
 """
 Excel automation project
 """
-
 import datetime
 import time
 import tkinter as tk
@@ -10,9 +9,10 @@ from tkinter.filedialog import askopenfilename
 from tkinter import *
 from datetime import datetime
 import openpyxl
+from tkinter.tix import *
 
 # GUI
-WINDOW = tk.Tk()
+WINDOW = Tk()
 WINDOW.title('AppX v1.0')
 WINDOW.geometry("1000x550")
 WINDOW.configure(background="#1D6F42")
@@ -24,13 +24,12 @@ background_text = Label(WINDOW,
 background_text.pack()
 background_text.place(x=20, y=85)
 
-FILE1 = ''
-FILE2 = ''
+FILE1 = None
+FILE2 = None
 FILE3 = 'date_hour.xlsx'
 
 WB = openpyxl.load_workbook(FILE3)
 SHEET = WB.active
-
 
 BUTON_FILE_1 = tk.Button(
     text="Load",
@@ -42,6 +41,9 @@ BUTON_FILE_1 = tk.Button(
 )
 BUTON_FILE_1.pack()
 BUTON_FILE_1.place(x=450, y=20)
+tip = Balloon()
+tip.bind_widget(BUTON_FILE_1,
+                balloonmsg="Load source file")
 
 BUTON_FILE_2 = tk.Button(
     text="Report",
@@ -53,6 +55,8 @@ BUTON_FILE_2 = tk.Button(
 )
 BUTON_FILE_2.pack()
 BUTON_FILE_2.place(x=550, y=120)
+tip.bind_widget(BUTON_FILE_2,
+                balloonmsg="Load report")
 
 BUTON_EXECUTION = tk.Button(
     text="Execute",
@@ -64,6 +68,8 @@ BUTON_EXECUTION = tk.Button(
 )
 BUTON_EXECUTION.pack()
 BUTON_EXECUTION.place(x=450, y=220)
+tip.bind_widget(BUTON_EXECUTION,
+                balloonmsg="Run")
 
 BUTON_DATE_RECORDER = tk.Button(
     text="Rec",
@@ -75,18 +81,21 @@ BUTON_DATE_RECORDER = tk.Button(
 )
 BUTON_DATE_RECORDER.pack()
 BUTON_DATE_RECORDER.place(x=550, y=320)
+tip.bind_widget(BUTON_DATE_RECORDER,
+                balloonmsg="Register data")
 
 BUTON_RESET_DATA = tk.Button(
     text="Delete",
     width=15,
     height=3,
     font=("Arial", 15, "bold"),
-    bg="#a80505",
+    bg="#E00201",
     fg="black",
 )
 BUTON_RESET_DATA.pack()
 BUTON_RESET_DATA.place(x=450, y=420)
-
+tip.bind_widget(BUTON_RESET_DATA,
+                balloonmsg="Reset data")
 
 def file_1(event):
     """
@@ -99,7 +108,6 @@ def file_1(event):
     )
     print(FILE1, ' loaded!')
 
-
 def file_2(event):
     """
         :param event:
@@ -110,7 +118,6 @@ def file_2(event):
         filetypes=[('text', '*.xlsx'), ('all files', '*.*')]
     )
     print(FILE2, ' loaded!')
-
 
 def execute(event):
     """
@@ -161,7 +168,6 @@ def execute(event):
     print('Report has been created! Report path: ', FILE2)
     WB.save(FILE2)
 
-
 def range_letter(start, stop):
     """
     :param start: first letter
@@ -169,7 +175,6 @@ def range_letter(start, stop):
     :return: range
     """
     return (chr(n) for n in range(ord(start), ord(stop) + 1))
-
 
 def date_recorder(event):
     """
@@ -218,7 +223,6 @@ def date_recorder(event):
             break
     WB.save(FILE3)
 
-
 def reset_data(event):
     """
     :param event:
@@ -263,7 +267,6 @@ def reset_data(event):
     WB.save(FILE1)
     print('Data has been deleted!')
 
-
 def deg_reg():
     """
     :return: temperature data
@@ -282,7 +285,6 @@ def deg_reg():
             SHEET[degree_cell[count]].value = str(degree) + '°'
             break
     WB.save(FILE1)
-
 
 BUTON_FILE_1.bind("<Button-1>", file_1)
 BUTON_FILE_2.bind("<Button-1>", file_2)
