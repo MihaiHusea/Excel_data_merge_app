@@ -1,6 +1,6 @@
-import openpyxl
 import unittest
-from excel_project import FILE1, FILE3
+from excel_project import *
+
 
 
 class AppX_test(unittest.TestCase):

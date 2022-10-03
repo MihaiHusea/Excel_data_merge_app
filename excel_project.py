@@ -8,12 +8,13 @@ from tkinter.filedialog import askopenfilename
 from datetime import datetime
 import openpyxl
 from tkinter.tix import *
+import os,sys,subprocess
 
 
 # GUI
 WINDOW = Tk()
 WINDOW.title('AppX v1.0')
-WINDOW.geometry("1500x550")
+WINDOW.geometry("1400x550")
 WINDOW.configure(background="#1D6F42")
 background_text = tk.Label(WINDOW,
                            text='KEEP\nCALM\nIT' + "'" + 'S JUST AN\nEXCEL\nFILE',
@@ -87,7 +88,7 @@ BUTTON_OPEN = tk.Button(
     font=("Arial", 15, "bold"),
     bg="yellow",
     fg="black",)
-BUTTON_OPEN.place(x=0, y=380)
+BUTTON_OPEN.place(x=70, y=380)
 tip.bind_widget(BUTTON_OPEN,
                 balloonmsg="Open report")
 
@@ -125,11 +126,6 @@ def file_2(event):
     # print(FILE2, ' loaded!')
 label2=tk.Label(WINDOW,font=('Arial',12,'bold'),bg='#1D6F42',fg='black')
 label2.place(x=750,y=120,width=600,height=85)
-
-
-def show_report(event):
-    pass
-
 
 
 def date_recorder(event):
@@ -200,7 +196,7 @@ def deg_reg():
         count += 1
         if SHEET[i].value is None:
             SHEET[i].value = str(count) + '.'
-            SHEET[degree_cell[count]].value = str(degree)
+            SHEET[degree_cell[count]].value = int(degree)
             break
     WB.save(FILE1)
 
@@ -225,11 +221,13 @@ def execute(event):
     SHEET = WB.active
     no_list = []
     t_list = []
+
     for i in range(1, 22):
         no_cell = SHEET['A' + str(i)].value
         no_list.append(no_cell)
         temp_cell = SHEET['B' + str(i)].value
         t_list.append(temp_cell)
+
     # load and read from FILE3
     WB = openpyxl.load_workbook(FILE3)
     SHEET = WB.active
@@ -242,10 +240,13 @@ def execute(event):
         d_list.append(date_cell)
 
     # write report
-    line_2 = [str(i) + '2' for i in range_letter("A", "Z")]
-    line_3 = [str(i) + '3' for i in range_letter("A", "Z")]
-    line_4 = [str(i) + '4' for i in range_letter("A", "Z")]
-    line_5 = [str(i) + '5' for i in range_letter("A", "Z")]
+    line_no = [str(i) + '2' for i in range_letter("A", "Z")]
+    line_temp = [str(i) + '3' for i in range_letter("A", "Z")]
+    line_hour = [str(i) + '4' for i in range_letter("A", "Z")]
+    line_date = [str(i) + '5' for i in range_letter("A", "Z")]
+    line_nominal = [str(i) + '8' for i in range_letter("A", "Z")]
+    line_l_tol = [str(i) + '9' for i in range_letter("A", "Z")]
+    line_u_tol = [str(i) + '10' for i in range_letter("A", "Z")]
 
     WB = openpyxl.load_workbook(FILE2)
     SHEET = WB.active
@@ -257,10 +258,19 @@ def execute(event):
         start_h_list = h_list[i]
         start_d_list = d_list[i]
 
-        SHEET[line_2[i]].value = start_no_list
-        SHEET[line_3[i]].value = start_t_list
-        SHEET[line_4[i]].value = start_h_list
-        SHEET[line_5[i]].value = start_d_list
+        SHEET[line_no[i]].value = start_no_list
+        SHEET[line_temp[i]].value = start_t_list
+        SHEET[line_hour[i]].value = start_h_list
+        SHEET[line_date[i]].value = start_d_list
+        if i>=1 and SHEET[line_no[i]].value is not None:
+
+            SHEET[line_nominal[i]].value =20
+            SHEET[line_u_tol[i]].value =22
+            SHEET[line_l_tol[i]].value =18
+        else:
+            SHEET[line_nominal[i]].value =None
+            SHEET[line_u_tol[i]].value = None
+            SHEET[line_l_tol[i]].value = None
 
     # print('Report has been created! Report path: ', FILE2)
     label4['text'] =f'Report created: {FILE2}'
@@ -312,6 +322,14 @@ def reset_data(event):
     WB.save(FILE1)
     # print('Data has been deleted!')
     label5['text']='Data has been deleted!'
+
+def show_report(event):
+    if sys.platform == "win32":
+        os.startfile(FILE2)
+    else:
+        opener = "open" if sys.platform == "darwin"  else "xdg-open"
+        subprocess.call([opener, FILE2])
+
 
 BUTTON_FILE_1.bind("<Button>", file_1)
 BUTTON_FILE_2.bind("<Button>", file_2)
