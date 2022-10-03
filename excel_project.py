@@ -9,10 +9,11 @@ from datetime import datetime
 import openpyxl
 from tkinter.tix import *
 
+
 # GUI
 WINDOW = Tk()
 WINDOW.title('AppX v1.0')
-WINDOW.geometry("1000x550")
+WINDOW.geometry("1500x550")
 WINDOW.configure(background="#1D6F42")
 background_text = tk.Label(WINDOW,
                            text='KEEP\nCALM\nIT' + "'" + 'S JUST AN\nEXCEL\nFILE',
@@ -32,6 +33,7 @@ BUTTON_FILE_1.place(x=450, y=20)
 tip = Balloon()
 tip.bind_widget(BUTTON_FILE_1,
                 balloonmsg="Load source file")
+
 
 BUTTON_FILE_2 = tk.Button(
     text="Report",
@@ -78,6 +80,18 @@ BUTTON_RESET_DATA.place(x=450, y=420)
 tip.bind_widget(BUTTON_RESET_DATA,
                 balloonmsg="Reset data")
 
+BUTTON_OPEN = tk.Button(
+    text="Open Report",
+    width=15,
+    height=3,
+    font=("Arial", 15, "bold"),
+    bg="yellow",
+    fg="black",)
+BUTTON_OPEN.place(x=0, y=380)
+tip.bind_widget(BUTTON_OPEN,
+                balloonmsg="Open report")
+
+
 FILE1 = None
 FILE2 = None
 FILE3 = 'date_hour.xlsx'
@@ -90,10 +104,13 @@ def file_1(event):
     :param event:
     :return:FILE1 name
     """
+    label1 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
+    label1.place(x=770, y=20, width=600, height=85)
     global FILE1
     FILE1 = askopenfilename(
         filetypes=[('FILE1', 'source_file.xlsx'),('all files', '*.*')])
-    print(FILE1, ' loaded!')
+    label1['text']=str(FILE1) + ' loaded !'
+    # print(FILE1, ' loaded!')
 
 
 def file_2(event):
@@ -104,13 +121,24 @@ def file_2(event):
     global FILE2
     FILE2 = askopenfilename(
         filetypes=[('FILE2', 'report.xlsx'),('all files', '*.*')])
-    print(FILE2, ' loaded!')
+    label2['text']=str(FILE2) + ' loaded !'
+    # print(FILE2, ' loaded!')
+label2=tk.Label(WINDOW,font=('Arial',12,'bold'),bg='#1D6F42',fg='black')
+label2.place(x=750,y=120,width=600,height=85)
+
+
+def show_report(event):
+    pass
+
+
 
 def date_recorder(event):
     """
     :param event:
     :return: record data
     """
+    label3 = tk.Label(WINDOW, font=('Arial',12,'bold'), bg='#1D6F42', fg='black')
+    label3.place(x=780, y=220, width=400, height=85)
 
     # write date and hour:
     WB = openpyxl.load_workbook(FILE3)
@@ -136,20 +164,26 @@ def date_recorder(event):
             delta = float(epoch) - time_float
             count += 1
             if count == 21:
-                print('Full memory! Press delete for reset data!')
+                # print('Full memory! Press delete for reset data!')
+                label3['text'] = 'Full memory! Press delete for reset data!'
+
 
         elif delta > wait_sec:
             SHEET[i].value = epoch
             SHEET[date_cell[count]].value = day_now
             SHEET[hour_cell[count]].value = hour_now
             SHEET[numero_cell[count]].value = str(count) + '.'
-            print('Values has been recorded!')
+            # print('Values has been recorded!')
+            label3['text'] = 'Values has been recorded!'
             deg_reg()  # write temperature data
             break
         else:
-            print(f'Please wait {wait_sec - int(delta)} seconds until the next record! ')
+            # print(f'Please wait {wait_sec - int(delta)} seconds until the next record! ')
+            label3['text'] = f'Please wait {wait_sec - int(delta)} seconds until the next record! '
             break
     WB.save(FILE3)
+
+
 
 def deg_reg():
     """
@@ -184,6 +218,8 @@ def execute(event):
     :param event:
     :return: create report
     """
+    label4 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
+    label4.place(x=750, y=320, width=700, height=85)
     # load and read from file 1
     WB = openpyxl.load_workbook(FILE1)
     SHEET = WB.active
@@ -226,15 +262,17 @@ def execute(event):
         SHEET[line_4[i]].value = start_h_list
         SHEET[line_5[i]].value = start_d_list
 
-    print('Report has been created! Report path: ', FILE2)
+    # print('Report has been created! Report path: ', FILE2)
+    label4['text'] =f'Report created: {FILE2}'
     WB.save(FILE2)
-
 
 def reset_data(event):
     """
     :param event:
     :return: clear table from all files
     """
+    label5 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
+    label5.place(x=780, y=420, width=300, height=85)
     # read and load FILE3
     global FILE3
     WB = openpyxl.load_workbook(FILE3)
@@ -272,11 +310,12 @@ def reset_data(event):
         numero.value = number
         degree.value = d1
     WB.save(FILE1)
-    print('Data has been deleted!')
-
+    # print('Data has been deleted!')
+    label5['text']='Data has been deleted!'
 
 BUTTON_FILE_1.bind("<Button>", file_1)
 BUTTON_FILE_2.bind("<Button>", file_2)
+BUTTON_OPEN.bind("<Button>",show_report)
 BUTTON_EXECUTION.bind("<Button>", execute)
 BUTTON_RESET_DATA.bind("<Button>", reset_data)
 BUTTON_DATE_RECORDER.bind("<Button>", date_recorder)
