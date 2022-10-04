@@ -262,15 +262,11 @@ def execute(event):
         SHEET[line_temp[i]].value = start_t_list
         SHEET[line_hour[i]].value = start_h_list
         SHEET[line_date[i]].value = start_d_list
-        if i>=1 and SHEET[line_no[i]].value is not None:
-
-            SHEET[line_nominal[i]].value =20
-            SHEET[line_u_tol[i]].value =22
-            SHEET[line_l_tol[i]].value =18
-        else:
-            SHEET[line_nominal[i]].value =None
-            SHEET[line_u_tol[i]].value = None
-            SHEET[line_l_tol[i]].value = None
+        if i>=1:
+            if SHEET[line_no[i]].value is not None:
+                SHEET[line_nominal[i]].value =20
+                SHEET[line_u_tol[i]].value =22
+                SHEET[line_l_tol[i]].value =18
 
     # print('Report has been created! Report path: ', FILE2)
     label4['text'] =f'Report created: {FILE2}'
@@ -327,7 +323,7 @@ def show_report(event):
     if sys.platform == "win32":
         os.startfile(FILE2)
     else:
-        opener = "open" if sys.platform == "darwin"  else "xdg-open"
+        opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, FILE2])
 
 
