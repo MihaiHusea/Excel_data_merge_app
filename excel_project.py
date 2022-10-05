@@ -7,21 +7,20 @@ import random
 from tkinter.filedialog import askopenfilename
 from datetime import datetime
 import openpyxl
-from tkinter.tix import *
-import os,sys,subprocess
-
+from tkinter import *
+import os, sys, subprocess
 
 # GUI
 WINDOW = Tk()
 WINDOW.title('AppX v1.0')
-WINDOW.geometry("1400x550")
+WINDOW.geometry("1400x650")
 WINDOW.configure(background="#1D6F42")
 background_text = tk.Label(WINDOW,
                            text='KEEP\nCALM\nIT' + "'" + 'S JUST AN\nEXCEL\nFILE',
                            bg='#1D6F42',
                            font=("Arial", 35, "bold"),
                            fg="white")
-background_text.place(x=20, y=85)
+background_text.place(x=20, y=165)
 
 BUTTON_FILE_1 = tk.Button(
     text="Load",
@@ -31,9 +30,9 @@ BUTTON_FILE_1 = tk.Button(
     bg='#abf77e',
     fg="black")
 BUTTON_FILE_1.place(x=450, y=20)
-tip = Balloon()
-tip.bind_widget(BUTTON_FILE_1,
-                balloonmsg="Load source file")
+label1 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label1.place(x=700, y=20, width=600, height=85)
+label1['text'] = 'No file selected! Click "Load" button to select a file.'
 
 
 BUTTON_FILE_2 = tk.Button(
@@ -44,8 +43,10 @@ BUTTON_FILE_2 = tk.Button(
     bg="#abf77e",
     fg="black")
 BUTTON_FILE_2.place(x=550, y=120)
-tip.bind_widget(BUTTON_FILE_2,
-                balloonmsg="Load report")
+label2 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label2.place(x=800, y=120, width=600, height=85)
+label2['text'] = 'No file selected! Click "Report" button to select a file.'
+
 
 BUTTON_DATE_RECORDER = tk.Button(
     text="Rec",
@@ -55,8 +56,10 @@ BUTTON_DATE_RECORDER = tk.Button(
     bg="#abf77e",
     fg="black")
 BUTTON_DATE_RECORDER.place(x=450, y=220)
-tip.bind_widget(BUTTON_DATE_RECORDER,
-                balloonmsg="Register data")
+label3 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label3.place(x=650, y=220, width=600, height=85)
+label3['text'] = 'Click "Rec" button to record data.'
+
 
 BUTTON_EXECUTION = tk.Button(
     text="Execute",
@@ -66,8 +69,9 @@ BUTTON_EXECUTION = tk.Button(
     bg="#3EB489",
     fg="black")
 BUTTON_EXECUTION.place(x=550, y=320)
-tip.bind_widget(BUTTON_EXECUTION,
-                balloonmsg="Run")
+label4 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label4.place(x=750, y=320, width=600, height=85)
+label4['text'] = 'Click "Execute" button to get data report.'
 
 
 BUTTON_RESET_DATA = tk.Button(
@@ -78,8 +82,9 @@ BUTTON_RESET_DATA = tk.Button(
     bg="#E00201",
     fg="black")
 BUTTON_RESET_DATA.place(x=450, y=420)
-tip.bind_widget(BUTTON_RESET_DATA,
-                balloonmsg="Reset data")
+label5 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label5.place(x=650, y=420, width=600, height=85)
+label5['text'] = 'Click "Delete" button reset data.'
 
 BUTTON_OPEN = tk.Button(
     text="Open Report",
@@ -87,30 +92,30 @@ BUTTON_OPEN = tk.Button(
     height=3,
     font=("Arial", 15, "bold"),
     bg="yellow",
-    fg="black",)
-BUTTON_OPEN.place(x=70, y=380)
-tip.bind_widget(BUTTON_OPEN,
-                balloonmsg="Open report")
+    fg="black", )
+BUTTON_OPEN.place(x=550, y=520)
+label6 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label6.place(x=750, y=520, width=600, height=85)
+label6['text'] = 'Click "Open Report" button to open file report.'
+
 
 
 FILE1 = None
 FILE2 = None
 FILE3 = 'date_hour.xlsx'
 
-WB = openpyxl.load_workbook(FILE3)
-SHEET = WB.active
-
 def file_1(event):
     """
     :param event:
     :return:FILE1 name
     """
-    label1 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
+    label1 = tk.Label( WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42',fg='black')
     label1.place(x=770, y=20, width=600, height=85)
     global FILE1
     FILE1 = askopenfilename(
-        filetypes=[('FILE1', 'source_file.xlsx'),('all files', '*.*')])
-    label1['text']=str(FILE1) + ' loaded !'
+        filetypes=[('FILE1', 'source_file.xlsx'), ('all files', '*.*')])
+
+    label1['text'] = str(FILE1) + ' loaded !'
     # print(FILE1, ' loaded!')
 
 
@@ -119,13 +124,13 @@ def file_2(event):
         :param event:
         :return:FILE2 name
         """
+    label2 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
+    label2.place(x=750, y=120, width=600, height=85)
     global FILE2
     FILE2 = askopenfilename(
-        filetypes=[('FILE2', 'report.xlsx'),('all files', '*.*')])
-    label2['text']=str(FILE2) + ' loaded !'
+        filetypes=[('FILE2', 'report.xlsx'), ('all files', '*.*')])
+    label2['text'] = str(FILE2) + ' loaded !'
     # print(FILE2, ' loaded!')
-label2=tk.Label(WINDOW,font=('Arial',12,'bold'),bg='#1D6F42',fg='black')
-label2.place(x=750,y=120,width=600,height=85)
 
 
 def date_recorder(event):
@@ -133,7 +138,7 @@ def date_recorder(event):
     :param event:
     :return: record data
     """
-    label3 = tk.Label(WINDOW, font=('Arial',12,'bold'), bg='#1D6F42', fg='black')
+    label3 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
     label3.place(x=780, y=220, width=400, height=85)
 
     # write date and hour:
@@ -180,7 +185,6 @@ def date_recorder(event):
     WB.save(FILE3)
 
 
-
 def deg_reg():
     """
     :return: temperature data
@@ -208,6 +212,7 @@ def range_letter(start, stop):
     :return: the character that represents the unicode
     """
     return (chr(n) for n in range(ord(start), ord(stop) + 1))
+
 
 def execute(event):
     """
@@ -262,15 +267,20 @@ def execute(event):
         SHEET[line_temp[i]].value = start_t_list
         SHEET[line_hour[i]].value = start_h_list
         SHEET[line_date[i]].value = start_d_list
-        if i>=1:
-            if SHEET[line_no[i]].value is not None:
-                SHEET[line_nominal[i]].value =20
-                SHEET[line_u_tol[i]].value =22
-                SHEET[line_l_tol[i]].value =18
 
+    for i in range(1,21):
+        if SHEET[line_no[i]].value is not None:
+            SHEET[line_nominal[i]].value = 20
+            SHEET[line_u_tol[i]].value = 22
+            SHEET[line_l_tol[i]].value = 18
+        else:
+            SHEET[line_nominal[i]].value = None
+            SHEET[line_u_tol[i]].value = None
+            SHEET[line_l_tol[i]].value = None
     # print('Report has been created! Report path: ', FILE2)
-    label4['text'] =f'Report created: {FILE2}'
+    label4['text'] = f'Report created: {FILE2}'
     WB.save(FILE2)
+
 
 def reset_data(event):
     """
@@ -317,19 +327,19 @@ def reset_data(event):
         degree.value = d1
     WB.save(FILE1)
     # print('Data has been deleted!')
-    label5['text']='Data has been deleted!'
+    label5['text'] = 'Data has been deleted!'
+
 
 def show_report(event):
     if sys.platform == "win32":
-        os.startfile(FILE2)
+        os.startfile(f'{FILE2}')
     else:
         opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, FILE2])
 
-
 BUTTON_FILE_1.bind("<Button>", file_1)
 BUTTON_FILE_2.bind("<Button>", file_2)
-BUTTON_OPEN.bind("<Button>",show_report)
+BUTTON_OPEN.bind("<Button>", show_report)
 BUTTON_EXECUTION.bind("<Button>", execute)
 BUTTON_RESET_DATA.bind("<Button>", reset_data)
 BUTTON_DATE_RECORDER.bind("<Button>", date_recorder)
