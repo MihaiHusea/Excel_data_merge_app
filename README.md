@@ -10,27 +10,32 @@
         -tkinter
         -random
         -openpyxl
+        -os
         
 3. App contents:
-    -the app has a graphical user interface that contains five buttons:
+    -the app has a graphical user interface that contains six buttons:
         -Load
         -Report
-        -Execute
         -Rec
+        -Execute
         -Delete
+        -Open report
+        
     -in our case we use the following files: "excel_project.py","source_file.xlsx",
-    "date_hour.xlsx","final_report.xlsx".
+    "date_hour.xlsx","report.xlsx".
 
 4. How to Install and Run the Project:
     -the script can be run by Pycharm or other IDE
     -also can be convert in .exe file
 
-5. How to Use the Project:
+5. How to use app GUI:
+    
       -Load    -used for browse and load source file, in our case we name it "source_file.xlsx"
-      -Report  -used for browse and load destination file, named "final_report.xlsx"
+      -Report  -used for browse and load destination file, named "report.xlsx"
+      -Rec     -used to generate random data in source files
       -Execute -used for import data from source files to final report
-      -Rec     -used to generate random data in source files 
       -Delete  -used to reset data from both source files
+      -Open Report -used to open report file
 
 6. Include Credits
        Team: Mihai Husea & Valentin Enache
