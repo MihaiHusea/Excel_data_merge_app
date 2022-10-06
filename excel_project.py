@@ -120,6 +120,7 @@ def file_1(event):
         label1['fg']='white'
         label1['text'] = 'No file selected! Click "Load" button to select a file.'
     # print(FILE1, ' loaded!')
+    #text label bug fixed
 
 
 def file_2(event):
@@ -334,6 +335,7 @@ def reset_data(event):
         degree.value = d1
     WB.save(FILE1)
     label5['text'] = 'Data has been deleted!'
+
 
 
 def show_report(event):
