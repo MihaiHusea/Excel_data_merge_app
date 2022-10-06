@@ -71,7 +71,7 @@ BUTTON_EXECUTION = tk.Button(
 BUTTON_EXECUTION.place(x=550, y=320)
 label4 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label4.place(x=750, y=320, width=600, height=85)
-label4['text'] = 'Click "Execute" button to get data report.'
+label4['text'] = 'Click "Execute" button to create data report.'
 
 
 BUTTON_RESET_DATA = tk.Button(
@@ -84,7 +84,7 @@ BUTTON_RESET_DATA = tk.Button(
 BUTTON_RESET_DATA.place(x=450, y=420)
 label5 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label5.place(x=650, y=420, width=600, height=85)
-label5['text'] = 'Click "Delete" button reset data.'
+label5['text'] = 'Click "Delete" button to reset data.'
 
 BUTTON_OPEN = tk.Button(
     text="Open Report",
@@ -110,12 +110,15 @@ def file_1(event):
     :return:FILE1 name
     """
     label1 = tk.Label( WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42',fg='black')
-    label1.place(x=770, y=20, width=600, height=85)
+    label1.place(x=700, y=20, width=600, height=85)
     global FILE1
     FILE1 = askopenfilename(
         filetypes=[('FILE1', 'source_file.xlsx'), ('all files', '*.*')])
-
-    label1['text'] = str(FILE1) + ' loaded !'
+    if FILE1:
+        label1['text'] = str(FILE1) + ' loaded!'
+    else:
+        label1['fg']='white'
+        label1['text'] = 'No file selected! Click "Load" button to select a file.'
     # print(FILE1, ' loaded!')
 
 
@@ -125,11 +128,15 @@ def file_2(event):
         :return:FILE2 name
         """
     label2 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
-    label2.place(x=750, y=120, width=600, height=85)
+    label2.place(x=800, y=120, width=600, height=85)
     global FILE2
     FILE2 = askopenfilename(
         filetypes=[('FILE2', 'report.xlsx'), ('all files', '*.*')])
-    label2['text'] = str(FILE2) + ' loaded !'
+    if FILE2:
+        label2['text'] = str(FILE2) + ' loaded !'
+    else:
+        label2['fg'] = 'white'
+        label2['text'] = 'No file selected! Click "Report" button to select a file.'
     # print(FILE2, ' loaded!')
 
 
@@ -175,7 +182,7 @@ def date_recorder(event):
             SHEET[hour_cell[count]].value = hour_now
             SHEET[numero_cell[count]].value = str(count) + '.'
             # print('Values has been recorded!')
-            label3['text'] = 'Values has been recorded!'
+            label3['text'] = 'Values have been recorded!'
             deg_reg()  # write temperature data
             break
         else:
