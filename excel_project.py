@@ -333,7 +333,6 @@ def reset_data(event):
         numero.value = number
         degree.value = d1
     WB.save(FILE1)
-    # print('Data has been deleted!')
     label5['text'] = 'Data has been deleted!'
 
 
