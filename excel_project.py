@@ -8,7 +8,9 @@ from tkinter.filedialog import askopenfilename
 from datetime import datetime
 import openpyxl
 from tkinter import *
-import os, sys, subprocess
+import os
+import sys
+import subprocess
 
 # GUI
 WINDOW = Tk()
@@ -99,10 +101,10 @@ label6.place(x=750, y=520, width=600, height=85)
 label6['text'] = 'Click "Open Report" button to open file report.'
 
 
-
 FILE1 = None
 FILE2 = None
 FILE3 = 'date_hour.xlsx'
+
 
 def file_1(event):
     """
@@ -117,10 +119,8 @@ def file_1(event):
     if FILE1:
         label1['text'] = str(FILE1) + ' loaded!'
     else:
-        label1['fg']='white'
+        label1['fg'] = 'white'
         label1['text'] = 'No file selected! Click "Load" button to select a file.'
-    # print(FILE1, ' loaded!')
-    #text label bug fixed
 
 
 def file_2(event):
@@ -138,7 +138,6 @@ def file_2(event):
     else:
         label2['fg'] = 'white'
         label2['text'] = 'No file selected! Click "Report" button to select a file.'
-    # print(FILE2, ' loaded!')
 
 
 def date_recorder(event):
@@ -169,25 +168,19 @@ def date_recorder(event):
 
     for i in epoch_cell[1:21]:
         if SHEET[i].value is not None:
-            time_float = float(SHEET[i].value)
-            delta = float(epoch) - time_float
+            delta=epoch-SHEET[i].value
             count += 1
             if count == 21:
-                # print('Full memory! Press delete for reset data!')
                 label3['text'] = 'Full memory! Press delete for reset data!'
-
-
         elif delta > wait_sec:
             SHEET[i].value = epoch
             SHEET[date_cell[count]].value = day_now
             SHEET[hour_cell[count]].value = hour_now
             SHEET[numero_cell[count]].value = str(count) + '.'
-            # print('Values has been recorded!')
             label3['text'] = 'Values have been recorded!'
             deg_reg()  # write temperature data
             break
         else:
-            # print(f'Please wait {wait_sec - int(delta)} seconds until the next record! ')
             label3['text'] = f'Please wait {wait_sec - int(delta)} seconds until the next record! '
             break
     WB.save(FILE3)
@@ -285,7 +278,6 @@ def execute(event):
             SHEET[line_nominal[i]].value = None
             SHEET[line_u_tol[i]].value = None
             SHEET[line_l_tol[i]].value = None
-    # print('Report has been created! Report path: ', FILE2)
     label4['text'] = f'Report created: {FILE2}'
     WB.save(FILE2)
 
@@ -337,13 +329,13 @@ def reset_data(event):
     label5['text'] = 'Data has been deleted!'
 
 
-
 def show_report(event):
     if sys.platform == "win32":
         os.startfile(f'{FILE2}')
     else:
         opener = "open" if sys.platform == "darwin" else "xdg-open"
         subprocess.call([opener, FILE2])
+
 
 BUTTON_FILE_1.bind("<Button>", file_1)
 BUTTON_FILE_2.bind("<Button>", file_2)
