@@ -111,11 +111,11 @@ def file_1(event):
     :param event:
     :return:FILE1 name
     """
-    label1 = tk.Label( WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42',fg='black')
-    label1.place(x=700, y=20, width=600, height=85)
     global FILE1
+    label1['fg'] = '#1D6F42'
     FILE1 = askopenfilename(
         filetypes=[('FILE1', 'source_file.xlsx'), ('all files', '*.*')])
+    label1['fg'] = 'black'
     if FILE1:
         label1['text'] = str(FILE1) + ' loaded!'
     else:
@@ -128,11 +128,11 @@ def file_2(event):
         :param event:
         :return:FILE2 name
         """
-    label2 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
-    label2.place(x=800, y=120, width=600, height=85)
     global FILE2
+    label2['fg'] = '#1D6F42'
     FILE2 = askopenfilename(
         filetypes=[('FILE2', 'report.xlsx'), ('all files', '*.*')])
+    label2['fg'] = 'black'
     if FILE2:
         label2['text'] = str(FILE2) + ' loaded !'
     else:
@@ -145,9 +145,7 @@ def date_recorder(event):
     :param event:
     :return: record data
     """
-    label3 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
-    label3.place(x=780, y=220, width=400, height=85)
-
+    label3['fg']='black'
     # write date and hour:
     WB = openpyxl.load_workbook(FILE3)
     SHEET = WB['Sheet']
@@ -181,7 +179,7 @@ def date_recorder(event):
             deg_reg()  # write temperature data
             break
         else:
-            label3['text'] = f'Please wait {wait_sec - int(delta)} seconds until the next record! '
+            label3['text'] = f'Please wait {wait_sec-int(delta)} seconds until the next record! '
             break
     WB.save(FILE3)
 
@@ -220,8 +218,7 @@ def execute(event):
     :param event:
     :return: create report
     """
-    label4 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
-    label4.place(x=750, y=320, width=700, height=85)
+    label4['fg'] = 'black'
     # load and read from file 1
     WB = openpyxl.load_workbook(FILE1)
     SHEET = WB.active
@@ -287,8 +284,7 @@ def reset_data(event):
     :param event:
     :return: clear table from all files
     """
-    label5 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='black')
-    label5.place(x=780, y=420, width=300, height=85)
+    label5['fg'] = 'black'
     # read and load FILE3
     global FILE3
     WB = openpyxl.load_workbook(FILE3)
