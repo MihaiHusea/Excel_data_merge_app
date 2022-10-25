@@ -166,7 +166,7 @@ def date_recorder(event):
 
     for i in epoch_cell[1:21]:
         if SHEET[i].value is not None:
-            delta=epoch-SHEET[i].value
+            delta = epoch-SHEET[i].value
             count += 1
             if count == 21:
                 label3['text'] = 'Full memory! Press delete for reset data!'
