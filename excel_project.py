@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Excel automation project
 """
@@ -13,11 +15,11 @@ import sys
 import subprocess
 
 # GUI
-WINDOW = Tk()
-WINDOW.title('AppX v1.0')
-WINDOW.geometry("1400x650")
-WINDOW.configure(background="#1D6F42")
-background_text = tk.Label(WINDOW,
+window = Tk()
+window.title('AppX v1.0')
+window.geometry("1400x650")
+window.configure(background="#1D6F42")
+background_text = tk.Label(window,
                            text='KEEP\nCALM\nIT' + "'" + 'S JUST AN\nEXCEL\nFILE',
                            bg='#1D6F42',
                            font=("Arial", 35, "bold"),
@@ -32,7 +34,7 @@ BUTTON_FILE_1 = tk.Button(
     bg='#abf77e',
     fg="black")
 BUTTON_FILE_1.place(x=450, y=20)
-label1 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label1 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label1.place(x=700, y=20, width=600, height=85)
 label1['text'] = 'No file selected! Click "Load" button to select a file.'
 
@@ -45,7 +47,7 @@ BUTTON_FILE_2 = tk.Button(
     bg="#abf77e",
     fg="black")
 BUTTON_FILE_2.place(x=550, y=120)
-label2 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label2 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label2.place(x=800, y=120, width=600, height=85)
 label2['text'] = 'No file selected! Click "Report" button to select a file.'
 
@@ -58,7 +60,7 @@ BUTTON_DATE_RECORDER = tk.Button(
     bg="#abf77e",
     fg="black")
 BUTTON_DATE_RECORDER.place(x=450, y=220)
-label3 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label3 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label3.place(x=650, y=220, width=600, height=85)
 label3['text'] = 'Click "Rec" button to record data.'
 
@@ -71,7 +73,7 @@ BUTTON_EXECUTION = tk.Button(
     bg="#3EB489",
     fg="black")
 BUTTON_EXECUTION.place(x=550, y=320)
-label4 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label4 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label4.place(x=750, y=320, width=600, height=85)
 label4['text'] = 'Click "Execute" button to create data report.'
 
@@ -84,7 +86,7 @@ BUTTON_RESET_DATA = tk.Button(
     bg="#E00201",
     fg="black")
 BUTTON_RESET_DATA.place(x=450, y=420)
-label5 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label5 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label5.place(x=650, y=420, width=600, height=85)
 label5['text'] = 'Click "Delete" button to reset data.'
 
@@ -96,7 +98,7 @@ BUTTON_OPEN = tk.Button(
     bg="yellow",
     fg="black", )
 BUTTON_OPEN.place(x=550, y=520)
-label6 = tk.Label(WINDOW, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
+label6 = tk.Label(window, font=('Arial', 12, 'bold'), bg='#1D6F42', fg='white')
 label6.place(x=750, y=520, width=600, height=85)
 label6['text'] = 'Click "Open Report" button to open file report.'
 
@@ -339,4 +341,4 @@ BUTTON_OPEN.bind("<Button>", show_report)
 BUTTON_EXECUTION.bind("<Button>", execute)
 BUTTON_RESET_DATA.bind("<Button>", reset_data)
 BUTTON_DATE_RECORDER.bind("<Button>", date_recorder)
-WINDOW.mainloop()
+window.mainloop()
