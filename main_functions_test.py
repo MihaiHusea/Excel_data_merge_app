@@ -8,7 +8,7 @@ class AppX_test(unittest.TestCase):
         """
         test:Load button(source_file)
         """
-        file1_path_split = FILE1.split('/')
+        file1_path_split = file1.split('/')
         actual_name_file_1 = file1_path_split[-1]
         expected = 'source_file.xlsx'
         self.assertEqual(expected, actual_name_file_1)
@@ -17,7 +17,7 @@ class AppX_test(unittest.TestCase):
         """
         test:Report file button(final_report)
         """
-        file2_path_split = FILE2.split('/')
+        file2_path_split = file2.split('/')
         actual_name_file_2 = file2_path_split[-1]
         expected = 'report.xlsx'
         self.assertEqual(expected, actual_name_file_2)
@@ -26,7 +26,7 @@ class AppX_test(unittest.TestCase):
         """
         test:write data in  source_file.xlsx
         """
-        wb = openpyxl.load_workbook(FILE1)
+        wb = openpyxl.load_workbook(file1)
         sheet = wb.active
         no_value = sheet['A2'].value
         degree_value = sheet['B2'].value
@@ -37,7 +37,7 @@ class AppX_test(unittest.TestCase):
         """
         test:write data in date_hour.xlsx
         """
-        wb = openpyxl.load_workbook(FILE3)
+        wb = openpyxl.load_workbook(file3)
         sheet = wb.active
         no_value=sheet['A2'].value
         hour_value=sheet['B2'].value
@@ -60,7 +60,7 @@ class AppX_test(unittest.TestCase):
         """
         :test: write data in report.xlsx
         """
-        wb = openpyxl.load_workbook(FILE2)
+        wb = openpyxl.load_workbook(file2)
         sheet = wb.active
         no_value=sheet['B2'].value
         temp_value=sheet['B3'].value
@@ -78,7 +78,7 @@ class AppX_test(unittest.TestCase):
         """
         :test: check values from date_hour.xlsx
         """
-        wb = openpyxl.load_workbook(FILE3)
+        wb = openpyxl.load_workbook(file3)
         sheet = wb.active
         no=sheet['A2'].value
         expected_no='1.'
@@ -96,7 +96,7 @@ class AppX_test(unittest.TestCase):
         """
         :test: check values from source_file.xlsx
         """
-        wb = openpyxl.load_workbook(FILE1)
+        wb = openpyxl.load_workbook(file1)
         sheet = wb.active
         no = sheet['A2'].value
         expected_no = '1.'

@@ -9,7 +9,7 @@ class AppX_test(unittest.TestCase):
         """
         test:delete cells source_file
         """
-        wb = openpyxl.load_workbook(FILE1)
+        wb = openpyxl.load_workbook(file1)
         sheet = wb.active
         no_value = sheet['A2'].value
         degree_value = sheet['B2'].value
@@ -20,7 +20,7 @@ class AppX_test(unittest.TestCase):
         """
         test:delete cells date_hour
         """
-        wb = openpyxl.load_workbook(FILE3)
+        wb = openpyxl.load_workbook(file3)
         sheet = wb.active
         cells = ['A2', 'B2', 'C2', 'D2']
         for i in cells:
