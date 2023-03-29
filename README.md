@@ -15,16 +15,16 @@
         
 
 3. App contents:
-    * the app has a graphical user interface that contains six buttons:
-        * Load
-        * Report
-        * Rec
+    * the app has a graphical user interface that contains seven buttons:
+        * Load file(date)
+        * Load file(measurements)
+        * Load file(report)
+        * Record data
         * Execute
         * Delete
         * Open report
         
-    * in our case we use the following files: "excel_project.py","source_file.xlsx",
-    "date_hour.xlsx","report.xlsx".
+    * in our case we use the following files:"date.xlsx","measurements.xlsx","report.xlsx".
 
 
 4. How to Install and Run the Project:
@@ -34,12 +34,13 @@
 
 5. How to use app GUI:
     
-      * Load    -used to browse and load source file, in our case we name it "source_file.xlsx"
-      * Report  -used to browse and load destination file, named "report.xlsx"
-      * Rec     -used to generate random data in source files
-      * Execute -used to import data from source files to final report
-      * Delete  -used to reset data from both source files
-      * Open Report -used to open report file
+      * Load file(date)         -used to browse and load source file1, named "date.xlsx"
+      * Load file(measurements) -used to browse and load source file2, named "measurements.xlsx"
+      * Load file report        -used to browse and load destination file, named "report.xlsx"
+      * Record data             -used to generate data in source files
+      * Execute                 -used to import data from source files to final report
+      * Delete                  -used to reset data from both source files
+      * Open Report             -used to open report file
 
 
 6. Include Credits

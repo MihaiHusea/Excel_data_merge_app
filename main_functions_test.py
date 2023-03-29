@@ -2,7 +2,7 @@ import unittest
 from excel_project import *
 
 
-class AppX_test(unittest.TestCase):
+class AppXtest(unittest.TestCase):
 
     def test_Load_button(self):
         """
@@ -10,7 +10,7 @@ class AppX_test(unittest.TestCase):
         """
         file1_path_split = file1.split('/')
         actual_name_file_1 = file1_path_split[-1]
-        expected = 'source_file.xlsx'
+        expected = 'measurements.xlsx'
         self.assertEqual(expected, actual_name_file_1)
 
     def test_Report_button(self):
@@ -24,7 +24,7 @@ class AppX_test(unittest.TestCase):
 
     def test_source_file_record(self):
         """
-        test:write data in  source_file.xlsx
+        test:write data in  measurements.xlsx
         """
         wb = openpyxl.load_workbook(file1)
         sheet = wb.active
@@ -35,7 +35,7 @@ class AppX_test(unittest.TestCase):
 
     def test_date_hour_file_record(self):
         """
-        test:write data in date_hour.xlsx
+        test:write data in date.xlsx
         """
         wb = openpyxl.load_workbook(file3)
         sheet = wb.active
@@ -76,7 +76,7 @@ class AppX_test(unittest.TestCase):
 
     def test_date_hour_file_check_values(self):
         """
-        :test: check values from date_hour.xlsx
+        :test: check values from date.xlsx
         """
         wb = openpyxl.load_workbook(file3)
         sheet = wb.active
@@ -94,7 +94,7 @@ class AppX_test(unittest.TestCase):
 
     def test_source_file_check_values(self):
         """
-        :test: check values from source_file.xlsx
+        :test: check values from measurements.xlsx
         """
         wb = openpyxl.load_workbook(file1)
         sheet = wb.active
